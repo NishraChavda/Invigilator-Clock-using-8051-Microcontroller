@@ -6,49 +6,49 @@ This project implements an Invigilator Clock using an 8051 microcontroller progr
 
 **Features**
 
-Time Display: Displays remaining time using a 7-segment display or an LED.
+- Time Display: Displays remaining time using a 7-segment display or an LED.
 
-Adjustable Timer: Allows setting custom exam durations.
+- Adjustable Timer: Allows setting custom exam durations.
 
-Low Power Consumption: Efficient use of the 8051 microcontroller for minimal power usage.
+- Low Power Consumption: Efficient use of the 8051 microcontroller for minimal power usage.
 
 **Components Used**
 
-8051 Microcontroller (AT89C51)
+- 8051 Microcontroller (AT89C51)
 
-7-Segment Display LED
+- 7-Segment Display LED
 
-Power Supply
+- Power Supply
 
-Crystal Oscillator (11.0592 MHz)
+- Crystal Oscillator (11.0592 MHz)
 
-Resistors and Capacitors
+- Resistors and Capacitors
 
 **Assembly Language Code**
 
 The project is programmed using Assembly language, utilizing internal timers and interrupts for accurate time management.
 
-Timer Programming: Timer 0 or Timer 1 is used for clock counting.
+- Timer Programming: Timer 0 or Timer 1 is used for clock counting.
 
-Interrupts: Managed to refresh display.
+- Interrupts: Managed to refresh display.
 
-Logic Flow: Initialization, Countdown, and Reset.
+- Logic Flow: Initialization, Countdown, and Reset.
 
 **Applications**
 
-Examination Halls
+- Examination Halls
 
-Classrooms
+- Classrooms
 
-Industrial Timer Applications
+- Industrial Timer Applications
 
 **Future Scope**
 
-Alert system that Generates buzzer sounds at the beginning, halfway mark, and near the end of the exam.
+- Alert system that Generates buzzer sounds at the beginning, halfway mark, and near the end of the exam.
 
-Adding wireless control via Bluetooth or Wi-Fi.
+- Adding wireless control via Bluetooth or Wi-Fi.
 
-Integrating a mobile app for remote monitoring.
+- Integrating a mobile app for remote monitoring.
 
 **Conclusion**
 
