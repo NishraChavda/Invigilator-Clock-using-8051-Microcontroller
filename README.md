@@ -1,10 +1,10 @@
 # Invigilator-Clock-using-8051-Microcontroller (Assembly Language)
 
-#Overview
+# Overview
 
 This project implements an Invigilator Clock using an 8051 microcontroller programmed in Assembly language. The Invigilator Clock is designed to manage and display examination time.
 
-#Features
+# Features
 
 Time Display: Displays remaining time using a 7-segment display or an LED.
 
@@ -12,7 +12,7 @@ Adjustable Timer: Allows setting custom exam durations.
 
 Low Power Consumption: Efficient use of the 8051 microcontroller for minimal power usage.
 
-#Components Used
+# Components Used
 
 8051 Microcontroller (AT89C51)
 
