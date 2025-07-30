@@ -1,57 +1,52 @@
-# Invigilator-Clock-using-8051-Microcontroller (Assembly Language)
+# Invigilator-Clock-8051 (C Language Version)
 
-**Overview**
+## Overview
 
-This project implements an Invigilator Clock using an 8051 microcontroller programmed in Assembly language. The Invigilator Clock is designed to manage and display examination time.
+This project implements an **Invigilator Clock** using an **8051 microcontroller**, programmed in **C language**. It functions as a countdown timer, suitable for examination environments to effectively display the remaining time.
 
-**Features**
+## Features
 
-- Time Display: Displays remaining time using a 7-segment display or an LED.
+- **Countdown Timer** from `02:59:59` to `00:00:00`
+- **Multiplexed 7-Segment Display** for hours, minutes, and seconds
+- **Auto Stop** when countdown reaches `00:00:00`
+- **Efficient Refresh Mechanism** using a software delay and segment multiplexing
 
-- Adjustable Timer: Allows setting custom exam durations.
+## Hardware Components Used
 
-- Low Power Consumption: Efficient use of the 8051 microcontroller for minimal power usage.
-
-**Components Used**
-
-- 8051 Microcontroller (AT89C51)
-
-- 7-Segment Display LED
-
-- Power Supply
-
+- AT89C51 / 8051 Microcontroller
+- 6 x Common Cathode 7-Segment Displays
+- Resistors for current limiting
 - Crystal Oscillator (11.0592 MHz)
+- Capacitors (typically 33pF) for oscillator
+- Power Supply (5V regulated)
 
-- Resistors and Capacitors
+## Code Logic
 
-**Assembly Language Code**
+### Initialization
+- Countdown starts from `02:59:59`
+- Digits stored in array `digits[] = {secU, secT, minU, minT, hrU, hrT}`
 
-The project is programmed using Assembly language, utilizing internal timers and interrupts for accurate time management.
+### Main Loop
+- Continuously calls `show()` to refresh the display
+- Uses `second_counter` to approximate a 1-second delay
+- Calls `countdown()` every second to decrement time
+- Countdown halts at `00:00:00`
 
-- Timer Programming: Timer 0 or Timer 1 is used for clock counting.
+### Display
+- Port `P1`: Sends data to 7-segment segments
+- Port `P2.0` to `P2.5`: Used to enable individual digits
+- Uses time-division multiplexing to refresh digits one-by-one
 
-- Interrupts: Managed to refresh display.
+## Applications
 
-- Logic Flow: Initialization, Countdown, and Reset.
+- Examination Timers
+- Countdown displays for academic or personal use
+- Embedded system time display projects
 
-**Applications**
+## Future Scope
 
-- Examination Halls
-
-- Classrooms
-
-- Industrial Timer Applications
-
-**Future Scope**
-
-- Alert system that Generates buzzer sounds at the beginning, halfway mark, and near the end of the exam.
-
-- Adding wireless control via Bluetooth or Wi-Fi.
-
-- Integrating a mobile app for remote monitoring.
-
-**Conclusion**
-
-This Invigilator Clock ensures effective time management in examination settings, enhancing fairness and efficiency. The use of 8051 microcontroller and assembly language provides a simple and reliable implementation.
+- Add real-time clock (RTC) integration for accurate timing
+- Add buttons to set custom start time
+- Display control using IR remote or serial interface
 
 
