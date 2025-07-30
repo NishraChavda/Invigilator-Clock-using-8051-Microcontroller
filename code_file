@@ -57,19 +57,17 @@ void countdown() {
         digits[0] = 9;
         if (digits[1]-- == 0) {
             digits[1] = 5;
-					if(digits[2]==0&&digits[3]==0){
-										digits[0]=0;
-										digits[1]=0;
-						return;
-									}
+		if(digits[2]==0&&digits[3]==0){
+			digits[0]=0;
+			digits[1]=0;
+			return;}
             if (digits[2]-- == 0) {
                 digits[2] = 9;
                 if (digits[3]-- == 0) {
                     digits[3] = 5;
-									if(digits[4]==0){
-										digits[3]=0;
-										digits[2]=0;
-									}
+			if(digits[4]==0){
+				digits[3]=0;
+				digits[2]=0;}
                     if (digits[4]-- == 0) {
                         digits[4] = 0;
                         if (digits[5]-- == 0) {
