@@ -1,4 +1,4 @@
-# Invigilator-Clock-8051 (C Language Version)
+# Invigilator Clock using 8051 Microcontroller
 
 ## Overview
 
