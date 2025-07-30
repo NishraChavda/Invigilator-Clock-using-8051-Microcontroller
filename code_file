@@ -1,114 +1,83 @@
-ORG 00H
- LJMP MAIN
- ORG 30H
-  MAIN:
- MOV DPTR , #MYDATA
- START:
- MOV R0,#00H
- MOV R1,#00H
- MOV R2,#00H
- MOV R3,#00H
- MOV R4,#00H
- MOV R5,#00H
- 
- CJNE R7 ,#0D , DISPLAY
- MOV R0,#9
- MOV R1,#5
- MOV R2,#9
- MOV R3,#5
- MOV R4,#2
- MOV R5,#0
- MOV R7,#00H
- 
- 
- DISPLAY:
- INC R7
- ACALL SHOW
- BACK:
- DEC R0
- CJNE R0, #00H,DISPLAY
- MOV R0, #10
- DEC R1
- CJNE R1, #00H ,DISPLAY
- MOV R1, #5
- DEC R2
- CJNE R2,#00H,DISPLAY
- MOV R2,#10
- DEC R3
- CJNE R3,#00H,DISPLAY
- MOV R3,#5
- MOV A,R5
- XRL A, #2D
- JZ HOUR1
- JNZ XX
- XX:
- DEC R4
- CJNE R4,#00H,DISPLAY
- MOV R4,#10
- SJMP HOUR2
- HOUR1:
- DEC R4
- CJNE R4,#00H,DISPLAY
- MOV R4 ,#4
- MOV R5,#02D
- 
- HOUR2:
- DEC R5
- CJNE R5,#3D,DISPLAY
- SJMP START
- 
- SHOW:
- MOV R6,#82D
- REPEAT:
- MOV A,R0
- MOVC A,@A+DPTR
- SETB P2.0
- MOV P1,A
- ACALL DELAY
- CLR P2.0
- MOV A,R1
- MOVC A,@A+DPTR
- SETB P2.1
- MOV P1,A
- ACALL DELAY
- CLR P2.1
- MOV A,R2
- MOVC A,@A+DPTR
- SETB P2.2
- MOV P1,A
- ACALL DELAY
- CLR P2.2
- MOV A,R3
- MOVC A,@A+DPTR
- SETB P2.3
- MOV P1 ,A
- ACALL DELAY
- CLR P2.3
- MOV A,R4
- MOVC A,@A+DPTR
- SETB P2.4
- MOV P1,A
- ACALL DELAY
- CLR P2.4
- MOV A,R5
- MOVC A,@A+DPTR
- SETB P2.5
- MOV P1,A
- ACALL DELAY
- CLR P2.5
- DJNZ R6, REPEAT
- RET
- 
- DELAY:
- SETB PSW. 4
- MOV R2,#10
- AGAIN2: MOV R3 ,#100
- AGAIN1:DJNZ R3,AGAIN1
- DJNZ R2 , AGAIN2
- CLR PSW. 4
- RET
- 
- ORG 300H
-  MYDATA:
-  DB 3FH,06H,5BH,4FH,66H,6DH,7DH,07H,7FH,6FH
-   END
+#include <reg51.h>
+
+#define SEGMENT P1
+sbit DIGIT0 = P2^0;
+sbit DIGIT1 = P2^1;
+sbit DIGIT2 = P2^2;
+sbit DIGIT3 = P2^3;
+sbit DIGIT4 = P2^4;
+sbit DIGIT5 = P2^5;
+sbit BUZZER = P3^7;  // Buzzer connected to P3.7
+
+// digits[] = {secU, secT, minU, minT, hrU, hrT}
+unsigned char digits[6] = {9, 5, 9, 5, 2, 0}; // Start from 02:59:59
+
+unsigned char code seg_code[10] = {
+    0x3F, 0x06, 0x5B, 0x4F, 0x66,
+    0x6D, 0x7D, 0x07, 0x7F, 0x6F
+};
+
+void show();
+void delay_short(); 
+void countdown();
+void beep();
+
+unsigned int second_counter = 0; // Used to delay 1 sec for real time
+
+void main() {
+    while (1) {
+        show();          // Display time
+        second_counter++;
+        if (second_counter >= 83) { // Roughly 1 second (tune if needed)
+            countdown();
+            second_counter = 0;
+        }
+    }
+}
+
+void show() {
+    SEGMENT = seg_code[digits[0]]; DIGIT0 = 0; delay_short(); DIGIT0 = 1;
+    SEGMENT = seg_code[digits[1]]; DIGIT1 = 0; delay_short(); DIGIT1 = 1;
+    SEGMENT = seg_code[digits[2]]; DIGIT2 = 0; delay_short(); DIGIT2 = 1;
+    SEGMENT = seg_code[digits[3]]; DIGIT3 = 0; delay_short(); DIGIT3 = 1;
+    SEGMENT = seg_code[digits[4]]; DIGIT4 = 0; delay_short(); DIGIT4 = 1;
+    SEGMENT = seg_code[digits[5]]; DIGIT5 = 0; delay_short(); DIGIT5 = 1;
+}
+
+void delay_short() {
+    unsigned int i;
+    for (i = 0; i < 200; i++);
+}
+
+
+// Countdown logic with buzzer trigger after 10 sec
+void countdown() {
+    // Countdown logic
+    if (digits[0]-- == 0) {
+        digits[0] = 9;
+        if (digits[1]-- == 0) {
+            digits[1] = 5;
+					if(digits[2]==0&&digits[3]==0){
+										digits[0]=0;
+										digits[1]=0;
+						return;
+									}
+            if (digits[2]-- == 0) {
+                digits[2] = 9;
+                if (digits[3]-- == 0) {
+                    digits[3] = 5;
+									if(digits[4]==0){
+										digits[3]=0;
+										digits[2]=0;
+									}
+                    if (digits[4]-- == 0) {
+                        digits[4] = 0;
+                        if (digits[5]-- == 0) {
+                            digits[5] = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
