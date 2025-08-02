@@ -7,7 +7,6 @@ sbit DIGIT2 = P2^2;
 sbit DIGIT3 = P2^3;
 sbit DIGIT4 = P2^4;
 sbit DIGIT5 = P2^5;
-sbit BUZZER = P3^7;  // Buzzer connected to P3.7
 
 // digits[] = {secU, secT, minU, minT, hrU, hrT}
 unsigned char digits[6] = {9, 5, 9, 5, 2, 0}; // Start from 02:59:59
@@ -20,7 +19,6 @@ unsigned char code seg_code[10] = {
 void show();
 void delay_short(); 
 void countdown();
-void beep();
 
 unsigned int second_counter = 0; // Used to delay 1 sec for real time
 
