@@ -47,6 +47,5 @@ This project implements an **Invigilator Clock** using an **8051 microcontroller
 
 - Add real-time clock (RTC) integration for accurate timing
 - Add buttons to set custom start time
-- Display control using IR remote or serial interface
 
 
